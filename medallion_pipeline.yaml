@@ -1,0 +1,101 @@
+resources:
+  jobs:
+    medallion_pipeline:
+      name: medallion_pipeline
+      email_notifications:
+        on_success:
+          - amenjonathan@gmail.com
+        on_failure:
+          - amenjonathan@gmail.com
+        on_duration_warning_threshold_exceeded:
+          - amenjonathan@gmail.com
+      timeout_seconds: 900
+      health:
+        rules:
+          - metric: RUN_DURATION_SECONDS
+            op: GREATER_THAN
+            value: 600
+      tasks:
+        - task_key: file_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/amenjonathan@gmail.com/WBrETL1Bronze
+            base_parameters:
+              source_schema: bronze_wanderbricks
+              source_volume: landing_wanderbricks
+              source_file: bookings
+              data_format: json
+              target_schema: bronze_wanderbricks
+              target_checkpoint_volume: checkpoints_bronze
+              target_table: bookings
+            source: WORKSPACE
+          min_retry_interval_millis: 300000
+          disable_auto_optimization: false
+          timeout_seconds: 600
+          health:
+            rules:
+              - metric: RUN_DURATION_SECONDS
+                op: GREATER_THAN
+                value: 300
+          email_notifications:
+            on_failure:
+              - amenjonathan@gmail.com
+        - task_key: bronze_to_silver
+          depends_on:
+            - task_key: file_to_bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/amenjonathan@gmail.com/WBrETL2Silver
+            base_parameters:
+              source_schema: bronze_wanderbricks
+              source_table: bookings
+              target_schema: silver_wanderbricks
+              target_checkpoint_volume: checkpoints_silver
+              target_table: bookings
+            source: WORKSPACE
+          min_retry_interval_millis: 300000
+          disable_auto_optimization: false
+          timeout_seconds: 600
+          health:
+            rules:
+              - metric: RUN_DURATION_SECONDS
+                op: GREATER_THAN
+                value: 300
+          email_notifications:
+            on_failure:
+              - amenjonathan@gmail.com
+        - task_key: silver_to_gold
+          depends_on:
+            - task_key: bronze_to_silver
+          notebook_task:
+            notebook_path: /Workspace/Users/amenjonathan@gmail.com/WBrETL3Gold
+            base_parameters:
+              source_schema: silver_wanderbricks
+              source_table: bookings
+              target_schema: gold_wanderbricks
+              target_table: bookings_monthly
+            source: WORKSPACE
+          min_retry_interval_millis: 300000
+          disable_auto_optimization: false
+          timeout_seconds: 600
+          health:
+            rules:
+              - metric: RUN_DURATION_SECONDS
+                op: GREATER_THAN
+                value: 300
+          email_notifications:
+            on_failure:
+              - amenjonathan@gmail.com
+          environment_key: Default
+      tags:
+        Domain: Sales
+      queue:
+        enabled: true
+      parameters:
+        - name: source_catalog
+          default: workspace
+        - name: target_catalog
+          default: workspace
+      environments:
+        - environment_key: Default
+          spec:
+            environment_version: "5"
+      performance_target: PERFORMANCE_OPTIMIZED
