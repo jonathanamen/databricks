@@ -13,13 +13,16 @@ incremental pipeline with streaming ingestion and incremental Gold layer
 aggregation.
 
 ## Architecture
+
+```
 Delta Share (Source)
-↓
-Bronze Layer       — Streaming ingestion, raw schema enforcement
-↓
-Silver Layer       — Cleansed, deduplicated, idempotent merge
-↓
-Gold Layer         — Incremental aggregation, analytics-ready
+       ↓
+  Bronze Layer       — Streaming ingestion, raw schema enforcement
+       ↓
+  Silver Layer       — Cleansed, deduplicated, idempotent merge
+       ↓
+  Gold Layer         — Incremental aggregation, analytics-ready
+```
 
 ## Pipeline Design
 
@@ -31,6 +34,8 @@ Gold Layer         — Incremental aggregation, analytics-ready
 - **Parameters:** Metadata-driven, notebook-parameterized
 
 ## Repository Structure
+
+```
 databricks/
 ├── databricks.yml              # DAB bundle config (reference implementation)
 ├── resources/
@@ -41,7 +46,8 @@ databricks/
 │   ├── WBrETL2Silver.py        # Silver transformation notebook
 │   └── WBrETL3Gold.py          # Gold aggregation notebook
 └── utils/
-└── Scratchpad.py           # Dev utilities, not part of pipeline
+    └── Scratchpad.py           # Dev utilities, not part of pipeline
+```
 
 ## Next Steps
 
