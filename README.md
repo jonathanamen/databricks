@@ -5,8 +5,6 @@ enterprise-grade streaming ETL patterns using Delta Lake, Lakeflow Jobs, and
 parameterized notebooks.
 
 ## Overview
-
-## Overview
 This project ingests travel booking data from the `samples.wanderbricks` 
 Delta Share dataset and processes it through Bronze, Silver, and Gold layers 
 using a three-task Lakeflow Job on serverless compute, implementing a fully 
