@@ -1,0 +1,23 @@
+bundle:
+  name: wanderbricks_medallion
+
+variables:
+  catalog:
+    default: workspace
+  email:
+    default: amenjonathan@gmail.com
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://[your-workspace-url].azuredatabricks.net
+
+  prod:
+    mode: production
+    workspace:
+      host: https://[your-workspace-url].azuredatabricks.net
+
+include:
+  - resources/*.yml

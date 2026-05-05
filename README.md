@@ -37,16 +37,20 @@ Delta Share (Source)
 
 ```
 databricks/
-├── databricks.yml              # DAB bundle config (reference implementation)
+├── databricks.yml              # DAB bundle config
 ├── resources/
-│   └── wanderbricks_job.yml    # Job definition
+│   └── medallion_pipeline.yml  # Job definition
 ├── src/
-│   ├── WBrSetup.py             # Environment reset utility
-│   ├── WBrETL1Bronze.py        # Bronze ingestion notebook
-│   ├── WBrETL2Silver.py        # Silver transformation notebook
-│   └── WBrETL3Gold.py          # Gold aggregation notebook
-└── utils/
-    └── Scratchpad.py           # Dev utilities, not part of pipeline
+│   ├── 0_setup/
+│   │   └── WBrSetup.py         # Environment reset utility
+│   ├── 1_bronze/
+│   │   └── WBrETL1Bronze.py    # Bronze ingestion notebook
+│   ├── 2_silver/
+│   │   └── WBrETL2Silver.py    # Silver transformation notebook
+│   └── 3_gold/
+│       └── WBrETL3Gold.py      # Gold aggregation notebook
+├── Scratchpad.py               # Dev utilities, not part of pipeline
+└── README.md
 ```
 
 ## Next Steps
