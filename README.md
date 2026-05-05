@@ -6,11 +6,14 @@ parameterized notebooks.
 
 ## Overview
 
+## Overview
 This project ingests travel booking data from the `samples.wanderbricks` 
 Delta Share dataset and processes it through Bronze, Silver, and Gold layers 
 using a three-task Lakeflow Job on serverless compute, implementing a fully 
 incremental pipeline with streaming ingestion and incremental Gold layer 
-aggregation.
+aggregation. The pipeline is structured as a Databricks Asset Bundle (DAB) 
+with dev and prod targets, enabling repeatable deployment via the Databricks 
+CLI.
 
 ## Architecture
 
