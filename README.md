@@ -56,13 +56,6 @@ databricks/
 
 ## Next Steps
 
-- DAB deployment: Bundle is structured as a Declarative Automation Bundle
-reference implementation. Full deployment requires a non-Community Edition
-workspace with Git integration enabled.
-
-- Dev/Prod targets: Add environment-specific cluster configurations via
-DAB target overrides.
-
 - Control table: Migrate pipeline parameters from notebook-level to a
 Unity Catalog control table for metadata-driven orchestration at scale.
 
